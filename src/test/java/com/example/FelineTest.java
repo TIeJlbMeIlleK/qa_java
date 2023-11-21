@@ -16,9 +16,10 @@ public class FelineTest {
 
     @Test
     public void testGetKittens() {
-        Mockito.when(feline.getKittens()).thenReturn(3);
+        int KITTENS_COUNT = 3;
+        Mockito.when(feline.getKittens()).thenReturn(KITTENS_COUNT);
         int result = feline.getKittens();
-        assertEquals(3, result);
+        assertEquals(KITTENS_COUNT, result);
     }
 
     @Test

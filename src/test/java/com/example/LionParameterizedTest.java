@@ -15,46 +15,32 @@ public class LionParameterizedTest {
     private final String sex;
     private final Feline felineSpy;
     private final boolean isHaveMane;
-    private final Class<? extends Exception> expectedException;
 
-    public LionParameterizedTest(String sex, Feline felineSpy, boolean isHaveMane, Class<? extends Exception> expectedException ) {
+    public LionParameterizedTest(String sex, Feline felineSpy, boolean isHaveMane) {
         this.sex = sex;
         this.felineSpy = felineSpy;
         this.isHaveMane = isHaveMane;
-        this.expectedException = expectedException;
     }
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"Самец", new Feline(), true, null},
-                {"Самка", new Feline(), false, null},
-                {"Сумка", new Feline(), false, IllegalArgumentException.class}
+                {"Самец", new Feline(), true},
+                {"Самка", new Feline(), false}
         });
     }
 
     @Test
     public void testDoesHaveMane() {
-        if (expectedException == null){
             Lion lion = Lion.getInstance(sex, felineSpy);
             boolean result = lion.doesHaveMane();
             assertEquals(isHaveMane,result);
-        } else {
-            assertThrows(IllegalArgumentException.class, () -> {
-                Lion.getInstance(sex,felineSpy);
-            });
-        }
-
     }
 
     @Test
     public void testGetFood() throws Exception {
-        if (expectedException == null){
             Lion lion = Lion.getInstance(sex, felineSpy);
             List<String> result = lion.getFood();
             assertEquals(List.of("Животные","Птицы", "Рыба"), result);
-        } else {
-            assertThrows(IllegalArgumentException.class, () -> Lion.getInstance(sex,felineSpy));
-        }
     }
 }

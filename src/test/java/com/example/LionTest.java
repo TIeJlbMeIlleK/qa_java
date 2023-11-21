@@ -5,9 +5,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LionTest {
@@ -16,22 +17,28 @@ public class LionTest {
     private Feline felineSpy;
 
     @Test
-    public void testGetKittens(){
-        Mockito.when(felineSpy.getKittens()).thenReturn(3);
+    public void testGetKittens() {
+        int KITTENS_COUNT = 3;
+        Mockito.when(felineSpy.getKittens()).thenReturn(KITTENS_COUNT);
         Lion lion = Lion.getInstance("Самец", felineSpy);
         int result = lion.getKittens();
-        assertEquals(3, result);
+        assertEquals(KITTENS_COUNT, result);
     }
 
     @Test
-    public void testDoesHaveMane(){
+    public void testDoesHaveMane() {
         Lion lion = Lion.getInstance("Самец", felineSpy);
         boolean result = lion.doesHaveMane();
         assertTrue(result);
     }
 
     @Test
-    public void testIsLion(){
+    public void testDoesHaveManeWithException() {
+        assertThrows(IllegalArgumentException.class, () -> Lion.getInstance("Сумка", felineSpy));
+    }
+
+    @Test
+    public void testIsLion() {
         Lion lion = Lion.getInstance("Самец", felineSpy);
         boolean result = lion.doesHaveMane();
         assertTrue(result);
